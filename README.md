@@ -1,6 +1,6 @@
 # File Analysis MCP Server
 
-This Model Context Protocol (MCP) server provides tools for reading and writing files, analyzing data (especially CSV files), and generating visualizations - all accessible to any MCP client like Claude Desktop.
+This Model Context Protocol (MCP) server provides tools for reading and writing files, analyzing data (especially CSV files), generating visualizations, and reading PDF files - all accessible to any MCP client like Claude Desktop.
 
 ## Features
 
@@ -8,6 +8,7 @@ This Model Context Protocol (MCP) server provides tools for reading and writing 
 - Read and write text files securely
 - List files in directories matching patterns
 - Get detailed file information (size, creation time, etc.)
+- Extract text content from PDF files
 
 ### Data Analysis
 - Read and sample CSV files
@@ -30,7 +31,7 @@ This Model Context Protocol (MCP) server provides tools for reading and writing 
 
 1. Install dependencies:
 ```bash
-pip install "mcp[cli]" pandas numpy matplotlib
+pip install "mcp[cli]" pandas numpy matplotlib PyPDF2
 ```
 
 2. Set up safe directories (optional):
@@ -51,6 +52,8 @@ Once installed, you can ask Claude questions like:
 
 - "Can you list the files in my Documents folder?"
 - "Read the content of ~/Documents/example.txt for me"
+- "Extract text from my ~/Documents/report.pdf file"
+- "Read page 5 of my PDF document"
 - "Analyze the data in ~/Downloads/sample.csv"
 - "Create a bar chart of the 'Sales' column from my CSV file"
 - "Write a summary report of my quarterly_sales.csv file"
@@ -82,6 +85,16 @@ This will start the server with the MCP Inspector interface for interactive test
 ### Reading a file
 ```
 Could you read the content of ~/Documents/notes.txt?
+```
+
+### Reading a PDF file
+```
+Can you extract the text from ~/Documents/report.pdf?
+```
+
+### Reading specific pages from a PDF
+```
+Please read pages 3 and 5 from ~/Downloads/manual.pdf
 ```
 
 ### Analyzing CSV data

@@ -143,6 +143,40 @@ def file_info(path: str) -> str:
     except Exception as e:
         return f"Error getting file info: {str(e)}"
 
+@mcp.tool()
+def read_pdf(path: str) -> str:
+    """
+    Read and return the text content of a PDF file.
+    
+    Args:
+        path: Path to the PDF file to read
+        
+    Returns:
+        The extracted text content from the PDF
+    """
+    print(f"Attempting to read PDF file: {path}", file=sys.stderr)
+    try:
+        import PyPDF2
+        file_path = safe_path(path)
+        
+        if not os.path.exists(file_path):
+            return f"Error: PDF file '{path}' not found."
+        
+        if not file_path.lower().endswith('.pdf'):
+            return f"Error: File '{path}' is not a PDF file."
+            
+        with open(file_path, 'rb') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            text_content = []
+            
+            for page in pdf_reader.pages:
+                text_content.append(page.extract_text())
+                
+            return "\n\n".join(text_content)
+            
+    except Exception as e:
+        return f"Error reading PDF file: {str(e)}"
+
 # Resources for filesystem access
 @mcp.resource("file://{path}")
 def file_resource(path: str) -> str:
